@@ -1,15 +1,4 @@
-
 # Responsive Owl Carousel for Elementor
-***Contributors: thenahidul
-Tags: owl carousel, carousel, carousel slider, image carousel, testimonial slider, team slider, testimonial carousel, owl carousel elementor, elementor carousel
-Requires at least: 5.0
-Tested up to: 5.9.3
-Requires PHP: 7.3
-Elementor tested up to: 3.6.5
-Elementor Pro tested up to: 3.6.5
-Stable tag: 1.0.0
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html***
 
 A highly customizable, powerful & responsive carousel plugin for Elementor page builder that is based on the Owl Carousel jQuery plugin.
 
