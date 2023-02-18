@@ -13,7 +13,7 @@ use Elementor\Group_Control_Image_Size;
 /**
  * Owl Carousel for Elementor widget
  *
- * Elementor widget that inserts an embeddable content into the page, from any given URL.
+ * Elementor widget that inserts an embbedable content into the page, from any given URL.
  *
  * @since 1.0.0
  */
@@ -24,7 +24,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 	 * @since 1.0.0
 	 */
 	const FIELD_PREFIX = 'carousel_';
-
+	
 	/**
 	 * Owl_Carousel constructor.
 	 *
@@ -35,18 +35,10 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 	 */
 	public function __construct( $data = [], $args = null ) {
 		parent::__construct( $data, $args );
-
+		
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'editor_scripts' ] );
-
-		// frontend assets
-		wp_register_style( 'owce-carousel', OWCE_PLUGIN_ASSETS . '/css/owl.carousel.min.css', null, '2.3.4' );
-		wp_register_style( 'owce-custom', OWCE_PLUGIN_ASSETS . '/css/custom.css', null, OWCE_VERSION );
-		wp_register_style( 'animate', OWCE_PLUGIN_ASSETS . '/css/animate.min.css', null, '3.7.0' );
-
-		wp_register_script( 'owce-carousel', OWCE_PLUGIN_ASSETS . '/js/owl.carousel.min.js', array( 'jquery' ), '2.3.4', true );
-		wp_register_script( 'owce-custom', OWCE_PLUGIN_ASSETS . '/js/custom.js', array( 'jquery', 'owce-carousel' ), OWCE_VERSION, true );
 	}
-
+	
 	/**
 	 * Get widget name.
 	 *
@@ -59,7 +51,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 	public function get_name() {
 		return 'owl-carousel-elementor';
 	}
-
+	
 	/**
 	 * Get widget title.
 	 *
@@ -70,9 +62,9 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 	 * @access public
 	 */
 	public function get_title() {
-		return esc_html__( 'Responsive Owl Carousel', 'responsive-owl-carousel-elementor' );
+		return __( 'Responsive Owl Carousel', 'responsive-owl-carousel-elementor' );
 	}
-
+	
 	/**
 	 * Get widget icon.
 	 *
@@ -85,7 +77,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 	public function get_icon() {
 		return 'eicon-slides';
 	}
-
+	
 	/**
 	 * Get widget categories.
 	 *
@@ -98,7 +90,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 	public function get_categories() {
 		return [ 'general' ];
 	}
-
+	
 	/**
 	 * Get widget keywords.
 	 *
@@ -109,16 +101,9 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 	 * @access public
 	 */
 	public function get_keywords() {
-		return array(
-			'owl carousel',
-			'carousel',
-			'testimonial',
-			'slider',
-			'slideshow',
-			'team',
-		);
+		return [ 'owl carousel', 'carousel', 'testimonial', 'slider', 'slideshow', 'team' ];
 	}
-
+	
 	/**
 	 * Retrieve the list of scripts the widget depended on.
 	 *
@@ -131,23 +116,40 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 	 *
 	 */
 	public function get_script_depends() {
-		return [ 'owce-carousel', 'owce-custom', 'owce-editor' ];
+		wp_register_script( 'owce-carousel', OWCE_PLUGIN_ASSETS . '/js/owl.carousel.min.js', [ 'jquery' ], '2.3.4', true );
+		wp_register_script( 'owce-custom', OWCE_PLUGIN_ASSETS . '/js/custom.js', [
+			'jquery',
+			'owce-carousel',
+			'elementor-frontend'
+		], OWCE_VERSION, true );
+		
+		wp_enqueue_script( 'owce-editor', OWCE_PLUGIN_ASSETS . '/js/editor.js', [
+			'jquery',
+			'elementor-editor'
+		], OWCE_VERSION, true );
+		
+		return [
+			'owce-carousel',
+			'owce-custom',
+			'owce-editor'
+		];
 	}
-
+	
 	/**
 	 * Editor scripts
 	 *
-	 * Enqueue plugin javascript integrations for Elementor editor.
+	 * Enqueue plugin javascripts integrations for Elementor editor.
 	 *
 	 * @since  1.2.1
 	 * @access public
 	 */
 	public function editor_scripts() {
-		wp_register_script( 'owce-editor', OWCE_PLUGIN_ASSETS . '/js/editor.js', array( 'jquery', 'elementor-editor' ), OWCE_VERSION, true );
-
-		wp_enqueue_script( 'owce-editor' );
+		wp_enqueue_script( 'owce-editor', OWCE_PLUGIN_ASSETS . '/js/editor.js', [
+			'jquery',
+			'elementor-editor'
+		], OWCE_VERSION, true );
 	}
-
+	
 	/**
 	 * Retrieve the list of styles the widget depended on.
 	 *
@@ -160,9 +162,18 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 	 *
 	 */
 	public function get_style_depends() {
-		return [ 'owce-carousel', 'animate', 'owce-custom', 'elementor-icons-fa-solid' ];
+		wp_register_style( 'owce-carousel', OWCE_PLUGIN_ASSETS . '/css/owl.carousel.min.css', null, '2.3.4' );
+		wp_register_style( 'owce-custom', OWCE_PLUGIN_ASSETS . '/css/custom.css', null, OWCE_VERSION );
+		wp_register_style( 'animate', OWCE_PLUGIN_ASSETS . '/css/animate.min.css', null, '3.7.0' );
+		
+		return [
+			'owce-carousel',
+			'animate',
+			'owce-custom',
+			'elementor-icons-fa-solid'
+		];
 	}
-
+	
 	/**
 	 * Register oEmbed widget controls.
 	 *
@@ -172,23 +183,24 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 	 * @access protected
 	 */
 	protected function register_controls() {
+		
 		$field_prefix = self::FIELD_PREFIX;
-
+		
 		$this->start_controls_section(
 			$field_prefix . 'content',
 			[
-				'label' => esc_html__( 'Items', 'responsive-owl-carousel-elementor' ),
+				'label' => __( 'Items', 'responsive-owl-carousel-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT
 			]
 		);
-
+		
 		owce_select_control( $this, 'layout', 'Layout', [
 			'options' => get_carousel_layouts(),
 			'default' => 'basic',
 			'classes' => 'js_carousel_layout',
 			/*'selector' => 'no-refresh'*/
 		] );
-
+		
 		owce_select_control( $this, 'layout_testimonial', 'Style', [
 			'options'   => get_carousel_layout_styles( 'testimonial' ),
 			'default'   => 'one',
@@ -196,7 +208,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 				$field_prefix . 'layout' => [ 'testimonial' ]
 			]
 		] );
-
+		
 		owce_select_control( $this, 'layout_team', 'Style', [
 			'options'   => get_carousel_layout_styles( 'team' ),
 			'default'   => 'one',
@@ -204,41 +216,41 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 				$field_prefix . 'layout' => [ 'team' ]
 			]
 		] );
-
+		
 		$this->start_controls_tabs(
 			$field_prefix . 'items_tabs'
 		);
-
+		
 		$this->start_controls_tab(
 			$field_prefix . 'items_tab',
 			[
 				'label' => __( 'Items', 'responsive-owl-carousel-elementor' ),
 			]
 		);
-
+		
 		$repeater = new Repeater();
-
+		
 		owce_text_control( $repeater, 'item_title', 'Title', [
 			'selectors' => [ '' ],
 			'classes'   => 'js_repeater_single js_hide_on_layout_basic js_hide_on_layout_image'
 		] );
-
+		
 		owce_text_control( $repeater, 'item_subtitle', 'Sub title', [
 			'selectors' => [ '' ],
 			'classes'   => 'js_repeater_single js_hide_on_layout_basic js_hide_on_layout_image',
 		] );
-
+		
 		owce_text_control( $repeater, 'item_content', 'Content', [
 			'type'      => 'textarea',
 			'selectors' => [ '' ],
 			'classes'   => 'js_repeater_single js_hide_on_layout_image js_hide_on_layout_team'
 		] );
-
+		
 		owce_image_control( $repeater, 'item_image', 'Upload photo', [
 			'selectors' => [ '' ],
 			'classes'   => 'js_repeater_single'
 		] );
-
+		
 		owce_slider_control( $repeater, 'item_rating', 'Rating', [
 			'property'   => 'no-selector',
 			'size_units' => [ '' ],
@@ -252,50 +264,50 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 			'default'    => [ 'unit' => '', 'size' => 5 ],
 			'classes'    => 'js_repeater_single js_hide_on_layout_basic js_hide_on_layout_image'
 		] );
-
+		
 		owce_social_icons_control( $repeater, get_social_icons(), [
 			'classes' => 'js_repeater_single js_hide_on_layout_basic js_hide_on_layout_image js_hide_on_layout_testimonial'
 		] );
-
+		
 		$this->add_control(
 			'items_list',
 			[
-				'label'       => esc_html__( 'Caoursel items', 'responsive-owl-carousel-elementor' ),
+				'label'       => __( 'Caoursel items', 'responsive-owl-carousel-elementor' ),
 				'type'        => Controls_Manager::REPEATER,
 				'classes'     => 'js_items_list_repeater',
 				'fields'      => $repeater->get_controls(),
 				'default'     => [
 					[
-						'item_title'   => esc_html__( 'Item 1', 'responsive-owl-carousel-elementor' ),
-						'item_content' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit', 'responsive-owl-carousel-elementor' )
+						'item_title'   => __( 'Item 1', 'responsive-owl-carousel-elementor' ),
+						'item_content' => __( 'Lorem ipsum dolor sit amet consectetur adipiscing elit', 'responsive-owl-carousel-elementor' )
 					],
 					[
-						'item_title'   => esc_html__( 'Item 2', 'responsive-owl-carousel-elementor' ),
-						'item_content' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit', 'responsive-owl-carousel-elementor' )
+						'item_title'   => __( 'Item 2', 'responsive-owl-carousel-elementor' ),
+						'item_content' => __( 'Lorem ipsum dolor sit amet consectetur adipiscing elit', 'responsive-owl-carousel-elementor' )
 					
 					],
 					[
-						'item_title'   => esc_html__( 'Item 3', 'responsive-owl-carousel-elementor' ),
-						'item_content' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit', 'responsive-owl-carousel-elementor' )
+						'item_title'   => __( 'Item 3', 'responsive-owl-carousel-elementor' ),
+						'item_content' => __( 'Lorem ipsum dolor sit amet consectetur adipiscing elit', 'responsive-owl-carousel-elementor' )
 					],
 					[
-						'item_title'   => esc_html__( 'Item 4', 'responsive-owl-carousel-elementor' ),
-						'item_content' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit', 'responsive-owl-carousel-elementor' )
+						'item_title'   => __( 'Item 4', 'responsive-owl-carousel-elementor' ),
+						'item_content' => __( 'Lorem ipsum dolor sit amet consectetur adipiscing elit', 'responsive-owl-carousel-elementor' )
 					]
 				],
 				'title_field' => '{{{ item_title }}}',
 			]
 		);
-
+		
 		$this->end_controls_tab(); // $field_prefix . 'items_tab'
-
+		
 		$this->start_controls_tab(
 			$field_prefix . 'items_options',
 			[
-				'label' => esc_html__( 'Options', 'responsive-owl-carousel-elementor' ),
+				'label' => __( 'Options', 'responsive-owl-carousel-elementor' ),
 			]
 		);
-
+		
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
 			[
@@ -304,7 +316,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 				'default' => 'owl_elementor_thumbnail'
 			]
 		);
-
+		
 		owce_number_control( $this, 'items_count', 'Number of Items', [
 			'responsive'     => true,
 			'default'        => 3,
@@ -313,7 +325,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 			'min'            => 1,
 			'max'            => 12,
 			'step'           => 1,
-			'description'    => esc_html__( 'The number of items visible on the screen at a time', 'responsive-owl-carousel-elementor' ),
+			'description'    => 'The number of items visible on the screen at a time'
 		] );
 		
 		$this->add_control(
@@ -323,7 +335,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 				'description' => esc_html__( 'Animate works only with 1 item.', 'responsive-owl-carousel-elementor' ),
 				'type'        => 'animation',
 				'label_block' => true,
-				'condition'   => [ $field_prefix . 'items_count' => 1 ],
+				'condition'   => [ $field_prefix . 'items_count' => 1 ]
 			]
 		);
 		
@@ -334,61 +346,61 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 				'description' => esc_html__( 'Animate works only with 1 item.', 'responsive-owl-carousel-elementor' ),
 				'type'        => 'exit_animation',
 				'label_block' => true,
-				'condition'   => [ $field_prefix . 'items_count' => 1 ],
+				'condition'   => [ $field_prefix . 'items_count' => 1 ]
 			]
 		);
-
+		
 		owce_switcher_control( $this, 'autoplay', 'Autoplay' );
-
+		
 		owce_number_control( $this, 'autoplay_timeout', 'Autoplay timeout', [
 			'default'   => 5000,
 			'step'      => 50,
 			'condition' => [ $field_prefix . 'autoplay' => 'yes', ]
 		] );
-
+		
 		owce_switcher_control( $this, 'autoplay_hover_pause', 'Autoplay pause on hover', [
 			'default'   => false,
 			'condition' => [ $field_prefix . 'autoplay' => 'yes' ]
 		] );
-
+		
 		owce_number_control( $this, 'smart_speed', 'Slide speed', [
 			'default'     => 500,
 			'step'        => 50,
-			'description' => esc_html__( 'Duration of change of per slide', 'responsive-owl-carousel-elementor' ),
+			'description' => 'Duration of change of per slide'
 		] );
-
+		
 		owce_switcher_control( $this, 'rewind', 'Rewind', [
-			'description' => esc_html__( 'Go backwards when the boundary is reached.',  'responsive-owl-carousel-elementor' ),
+			'description' => 'Go backwards when the boundary is reached.',
 			'default'     => '',
 			'condition'   => [ $field_prefix . 'enable_loop!' => 'yes' ]
 		] );
-
+		
 		owce_switcher_control( $this, 'enable_loop', 'Loop', [
-			'description'    => esc_html__( 'Infinity loop. Duplicate last and first items to get loop illusion.', 'responsive-owl-carousel-elementor' ),
+			'description'    => 'Infinity loop. Duplicate last and first items to get loop illusion.',
 			'responsive'     => true,
 			'default'        => '',
 			'tablet_default' => '',
 			'mobile_default' => '',
 			'condition'      => [ $field_prefix . 'rewind!' => 'yes' ]
 		] );
-
+		
 		owce_switcher_control( $this, 'show_nav', 'Show next/prev', [
 			'responsive'     => true,
 			'default'        => '',
 			'tablet_default' => '',
 			'mobile_default' => ''
 		] );
-
+		
 		owce_switcher_control( $this, 'show_dots', 'Show dots', [ 'responsive' => true ] );
-
+		
 		owce_switcher_control( $this, 'mouse_drag', 'Mouse drag' );
-
+		
 		owce_switcher_control( $this, 'touch_drag', 'Touch drag' );
-
+		
 		owce_switcher_control( $this, 'lazyLoad', 'LazyLoad', [ 'default' => '' ] );
-
+		
 		owce_switcher_control( $this, 'lightbox', 'Lightbox', [
-			'description' => esc_html__( 'Enable lightbox effect to images', 'responsive-owl-carousel-elementor' ),
+			'description' => 'Enable lightbox effect to images',
 			'default'     => '',
 			'condition'   => [ $field_prefix . 'layout_team!' => 'two' ]
 		] );
@@ -401,7 +413,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 				$field_prefix . 'layout_team!' => 'two'
 			]
 		] );
-
+		
 		owce_switcher_control( $this, 'lightbox_description', 'Lightbox Description', [
 			'description' => 'Show image description in the lightbox mode. <a target="_blank" href="https://prnt.sc/15sqxgc">see screenshot</a>',
 			'default'     => '',
@@ -410,28 +422,28 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 				$field_prefix . 'layout_team!' => 'two'
 			]
 		] );
-
+		
 		owce_switcher_control( $this, 'lightbox_editor_mode', 'Disable Lightbox in Editor', [
-			'description' => esc_html__( 'Disable open image in lightbox in the editor mode', 'responsive-owl-carousel-elementor' ),
+			'description' => 'Disable open image in lightbox in the editor mode',
 			'default'     => 'yes',
 			'condition'   => [
 				$field_prefix . 'lightbox'     => 'yes',
 				$field_prefix . 'layout_team!' => 'two'
 			]
 		] );
-
+		
 		owce_switcher_control( $this, 'auto_height', 'Auto height', [
 			'default'     => '',
-			'description' => esc_html__( 'Works only with 1 item on screen. Calculate all visible items and change height according to heighest item.', 'responsive-owl-carousel-elementor' ),
+			'description' => 'Works only with 1 item on screen. Calculate all visible items and change height according to heighest item.',
 			'condition'   => [ $field_prefix . 'items_count' => 1 ]
 		] );
-
+		
 		$this->end_controls_tab(); // $field_prefix . 'items_options'
-
+		
 		$this->end_controls_tabs(); // $field_prefix . 'items_tabs'
-
+		
 		$this->end_controls_section(); // $field_prefix . 'content'
-
+		
 		owce_common_controls_section( $this, 'items_single', 'Items', '.item', [
 			'align'                   => true,
 			'tag'                     => false,
@@ -467,7 +479,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 			'hover_animation'         => true,
 			'hover_animation_default' => 'float'
 		] );
-
+		
 		owce_common_controls_section( $this, 'title', 'Title', '.owl-title', [
 			'default_tag' => 'h3',
 			'condition'   => [
@@ -477,7 +489,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 				]
 			]
 		] );
-
+		
 		owce_common_controls_section( $this, 'subtitle', 'Sub Title', '.owl-subtitle', [
 			'default_tag' => 'h5',
 			'condition'   => [
@@ -487,141 +499,103 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 				]
 			]
 		] );
-
-		owce_common_controls_section(
-			$this,
-			'content',
-			'Content',
-			'.owl-content',
-			array(
-				'default_tag'      => 'p',
-				'condition'        => [
-					$field_prefix . 'layout' => [
-						'basic',
-						'testimonial'
-					]
-				],
-				'show_hide_button' => [
-					$field_prefix . 'layout' => [
-						'team',
-						'testimonial'
-					]
-				],
-			)
-		);
-
-		owce_common_controls_section(
-			$this,
-			'image',
-			'Image',
-			'.owl-thumb img',
-			array(
-				'image'            => true,
-				'tag'              => false,
-				'color'            => false,
-				'padding'          => true,
-				'border'           => true,
-				'border_radius'    => true,
-				'typography'       => false,
-				'size'             => true,
-				'show_hide_button' => [
-					$field_prefix . 'layout' => [
-						'team',
-						'testimonial'
-					]
-				],
-			)
-		);
-
-		owce_common_controls_section(
-			$this,
-			'rating_icon',
-			'Rating icon',
-			'.owl-rating-icon i',
-			array(
-				'icon'       => true,
-				'font_size'  => true,
-				'tag'        => false,
-				'typography' => false,
-				'condition'  => [ $field_prefix . 'layout' => [ 'testimonial' ] ],
-			)
-		);
-
-		owce_common_controls_section(
-			$this,
-			'quote_icon',
-			'Quote icon',
-			'.owl-quote-icon i',
-			array(
-				'icon'         => true,
-				'font_size'    => true,
-				'tag'          => false,
-				'typography'   => false,
-				'hide_default' => 'yes',
-				'default'      => [ 'library' => 'solid', 'value' => 'fa fa-quote-left' ],
-				'condition'    => [ $field_prefix . 'layout' => [ 'testimonial' ] ]
-			)
-		);
-
-		owce_common_controls_section(
-			$this,
-			'social_icon',
-			'Social icon',
-			'.owl-social-icon i',
-			array(
-				'font_size'               => true,
-				'hover_color'             => true,
-				'hover_background'        => true,
-				'tag'                     => false,
-				'typography'              => false,
-				'border'                  => true,
-				'padding'                 => true,
-				'size'                    => true,
-				'border_radius'           => true,
-				'background'              => true,
-				'background_type'         => [ 'classic' ],
-				'background_exclude'      => [ 'image' ],
-				'hover_animation'         => true,
-				'hover_animation_default' => 'bob',
-				'condition'               => [ $field_prefix . 'layout' => [ 'team' ] ],
-			)
-		);
-
-		owce_common_controls_section(
-			$this,
-			'navigation',
-			'Navigation',
-			'.owl-nav i',
-			array(
-				'tag'                => false,
-				'background'         => true,
-				'background_type'    => [ 'classic' ],
-				'background_exclude' => [ 'image' ],
-				'typography'         => true,
-				'hide'               => false,
-				'condition'          => [ $field_prefix . 'show_nav' => 'yes' ],
-			)
-		);
-
-		owce_common_controls_section(
-			$this,
-			'dots',
-			'Dots',
-			'.owl-dot span',
-			array(
-				'tag'                => false,
-				'color'              => false,
-				'background'         => true,
-				'size'               => true,
-				'background_type'    => [ 'classic' ],
-				'background_exclude' => [ 'image' ],
-				'typography'         => false,
-				'hide'               => false,
-				'condition'          => [ $field_prefix . 'show_dots' => 'yes' ],
-			)
-		);
+		
+		owce_common_controls_section( $this, 'content', 'Content', '.owl-content', [
+			'default_tag'      => 'p',
+			'condition'        => [
+				$field_prefix . 'layout' => [
+					'basic',
+					'testimonial'
+				]
+			],
+			'show_hide_button' => [
+				$field_prefix . 'layout' => [
+					'team',
+					'testimonial'
+				]
+			]
+		] );
+		
+		owce_common_controls_section( $this, 'image', 'Image', '.owl-thumb img', [
+			'image'            => true,
+			'tag'              => false,
+			'color'            => false,
+			'padding'          => true,
+			'border'           => true,
+			'border_radius'    => true,
+			'typography'       => false,
+			'size'             => true,
+			'show_hide_button' => [
+				$field_prefix . 'layout' => [
+					'team',
+					'testimonial'
+				]
+			]
+		] );
+		
+		owce_common_controls_section( $this, 'rating_icon', 'Rating icon', '.owl-rating-icon i', [
+			'icon'       => true,
+			'font_size'  => true,
+			'tag'        => false,
+			'typography' => false,
+			'condition'  => [ $field_prefix . 'layout' => [ 'testimonial' ] ]
+		] );
+		
+		owce_common_controls_section( $this, 'quote_icon', 'Quote icon', '.owl-quote-icon i', [
+			'icon'         => true,
+			'font_size'    => true,
+			'tag'          => false,
+			'typography'   => false,
+			'hide_default' => 'yes',
+			'default'      => [ 'library' => 'solid', 'value' => 'fa fa-quote-left' ],
+			'condition'    => [ $field_prefix . 'layout' => [ 'testimonial' ] ]
+		] );
+		
+		owce_common_controls_section( $this, 'social_icon', 'Social icon', '.owl-social-icon i', [
+			'font_size'               => true,
+			'hover_color'             => true,
+			'hover_background'        => true,
+			'tag'                     => false,
+			'typography'              => false,
+			'border'                  => true,
+			'padding'                 => true,
+			'size'                    => true,
+			'border_radius'           => true,
+			'background'              => true,
+			'background_type'         => [ 'classic' ],
+			'background_exclude'      => [ 'image' ],
+			'hover_animation'         => true,
+			'hover_animation_default' => 'bob',
+			'condition'               => [ $field_prefix . 'layout' => [ 'team' ] ],
+		] );
+		
+		owce_common_controls_section( $this, 'navigation', 'Navigation', '.owl-nav i', [
+			'tag'                => false,
+			'background'         => true,
+			'background_type'    => [ 'classic' ],
+			'background_exclude' => [ 'image' ],
+			'typography'         => true,
+			'hide'               => false,
+			'condition'          => [
+				$field_prefix . 'show_nav' => 'yes',
+			]
+		] );
+		
+		owce_common_controls_section( $this, 'dots', 'Dots', '.owl-dot span', [
+			'tag'                => false,
+			'color'              => false,
+			'background'         => true,
+			'size'               => true,
+			'background_type'    => [ 'classic' ],
+			'background_exclude' => [ 'image' ],
+			'typography'         => false,
+			'hide'               => false,
+			'condition'          => [
+				$field_prefix . 'show_dots' => 'yes',
+			]
+		] );
 	}
-
+	
 	/**
 	 * Render oEmbed widget output on the frontend.
 	 *
@@ -633,66 +607,66 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 	protected function render() {
 		$settings     = $this->get_settings_for_display();
 		$field_prefix = self::FIELD_PREFIX;
-
+		
 		$layout          = $this->get_owl_settings( 'layout' );
 		$layout_style    = $this->get_owl_settings( 'layout_' . $layout ) ?? 'one';
 		$show_nav        = $this->get_owl_settings( 'show_nav' );
 		$show_nav_tablet = $this->get_owl_settings( 'show_nav_tablet' );
 		$show_nav_mobile = $this->get_owl_settings( 'show_nav_mobile' );
-
+		
 		$item_hover_animation_class = '';
 		$item_hover_animation       = $this->get_owl_settings( 'items_single_hover_animation' );
-
+		
 		if ( ! empty( $item_hover_animation ) ) {
 			$item_hover_animation_class = 'elementor-animation-' . $item_hover_animation;
 		}
-
+		
 		$social_icon_hover_animation_class = '';
 		$social_icon_hover_animation       = $this->get_owl_settings( 'social_icon_hover_animation' );
-
+		
 		if ( ! empty( $social_icon_hover_animation ) ) {
 			$social_icon_hover_animation_class = 'elementor-animation-' . $social_icon_hover_animation;
 		}
-
+		
 		$settings_js = [
 			'field_prefix'       => $field_prefix,
 			'layout'             => $layout,
 			'items_count'        => $this->get_owl_settings( 'items_count' ),
 			'items_count_tablet' => $this->get_owl_settings( 'items_count_tablet' ),
 			'items_count_mobile' => $this->get_owl_settings( 'items_count_mobile' ),
-
+			
 			'margin'        => $this->get_owl_settings( 'items_single_gap' )['size'],
 			'margin_tablet' => ! empty( $this->get_owl_settings( 'items_single_gap_tablet' ) ) ? $this->get_owl_settings( 'items_single_gap_tablet' )['size'] : 0,
 			'margin_mobile' => ! empty( $this->get_owl_settings( 'items_single_gap_mobile' ) ) ? $this->get_owl_settings( 'items_single_gap_mobile' )['size'] : 0,
-
+			
 			'nav'        => $show_nav,
 			'nav_tablet' => $show_nav_tablet,
 			'nav_mobile' => $show_nav_mobile,
-
+			
 			'dots'        => $this->get_owl_settings( 'show_dots' ),
 			'dots_tablet' => $this->get_owl_settings( 'show_dots_tablet' ),
 			'dots_mobile' => $this->get_owl_settings( 'show_dots_mobile' ),
-
+			
 			'autoplay'             => $this->get_owl_settings( 'autoplay' ),
 			'autoplay_timeout'     => $this->get_owl_settings( 'autoplay_timeout' ),
 			'autoplay_hover_pause' => $this->get_owl_settings( 'autoplay_hover_pause' ),
-
+			
 			'animate_in'  => $this->get_owl_settings( 'animate_in' ),
 			'animate_out' => $this->get_owl_settings( 'animate_out' ),
-
+			
 			'rewind'      => $this->get_owl_settings( 'rewind' ),
 			'loop'        => $this->get_owl_settings( 'enable_loop' ),
 			'loop_tablet' => $this->get_owl_settings( 'enable_loop_tablet' ),
 			'loop_mobile' => $this->get_owl_settings( 'enable_loop_mobile' ),
-
+			
 			'smart_speed' => $this->get_owl_settings( 'smart_speed' ),
 			'lazyLoad'    => $this->get_owl_settings( 'lazyLoad' ),
 			'auto_height' => $this->get_owl_settings( 'auto_height' ),
-
+			
 			'mouse_drag' => $this->get_owl_settings( 'mouse_drag' ),
 			'touch_drag' => $this->get_owl_settings( 'touch_drag' ),
 		];
-
+		
 		$this->add_render_attribute(
 			'carousel-options',
 			[
@@ -701,17 +675,17 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 				'data-options' => [ wp_json_encode( $settings_js ) ]
 			]
 		);
-
+		
 		$css_classes = $show_nav != 'yes' ? 'owce-carousel-no-nav' : '';
 		$css_classes .= $show_nav_tablet != 'yes' ? ' owce-carousel-no-nav-tablet' : '';
 		$css_classes .= $show_nav_mobile != 'yes' ? ' owce-carousel-no-nav-mobile' : '';
-
+		
 		echo "<div class='js-owce-carousel-container owce-carousel-container " . esc_attr( $css_classes ) . "'>";
 		echo "<div " . $this->get_render_attribute_string( 'carousel-options' ) . ">";
 		require OWCE_PLUGIN_PATH . '/includes/widgets/views/' . $layout . '/' . $layout_style . '.php';
 		echo "</div></div>";
 	}
-
+	
 	/**
 	 * Get Settings.
 	 *

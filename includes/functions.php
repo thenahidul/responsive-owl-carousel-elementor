@@ -33,7 +33,7 @@ function get_carousel_layouts() {
 		'testimonial' => __( 'Testimonial', 'responsive-owl-carousel-elementor' ),
 		'team'        => __( 'Team', 'responsive-owl-carousel-elementor' ),
 	];
-
+	
 	return apply_filters( 'owce_layouts', $base_layouts );
 }
 
@@ -60,7 +60,7 @@ function get_carousel_layout_styles( $layout = 'basic' ) {
 			'two' => __( 'Two', 'responsive-owl-carousel-elementor' ),
 		],
 	];
-
+	
 	return $styles[ $layout ];
 }
 
@@ -75,7 +75,7 @@ function get_social_icons() {
 	for ( $i = 1; $i <= $total; $i ++ ) {
 		$social_icons[ 'item_social_icon_' . $i ] = esc_html__( 'Icon', 'responsive-owl-carousel-elementor' );
 	}
-
+	
 	return apply_filters( 'owce_social_icons', $social_icons );
 }
 
@@ -89,41 +89,41 @@ function get_social_icons() {
  * @return false|string|void
  */
 function owce_get_social_icons( $widget, $settings, $attrs = [ 'class' => '' ] ) {
-
+	
 	$social_icons = get_social_icons();
 	if ( count( $social_icons ) < 1 ) {
 		return;
 	}
-
+	
 	ob_start();
 	foreach ( $social_icons as $icon_key => $label ) {
-
+		
 		$link_key = $icon_key . '_link';
-
+		
 		$link_attrs = [
 			'class'        => $attrs['class'],
 			'data-setting' => $link_key . '_url',
 		];
-
+		
 		if ( ! empty( $settings[ $link_key ]['url'] ) ) {
 			$link_attrs['href'] = $settings[ $link_key ]['url'];
 		}
-
+		
 		if ( ! empty( $settings[ $link_key ]['is_external'] ) ) {
 			$link_attrs['target'] = "_blank";
 		}
-
+		
 		if ( ! empty( $settings[ $link_key ]['nofollow'] ) ) {
 			$link_attrs['rel'] = "nofollow";
 		}
-
+		
 		echo owce_get_text_with_tag(
 			$widget,
 			'a',
 			owce_get_rendered_icons( $settings[ $icon_key ] ),
 			$link_attrs );
 	}
-
+	
 	return ob_get_clean();
 }
 
@@ -138,16 +138,17 @@ function owce_get_social_icons( $widget, $settings, $attrs = [ 'class' => '' ] )
  * @return string
  */
 function owce_get_text_with_tag( $widget, $html_tag, $text, $attrs = [] ) {
+	
 	//$widget->add_render_attribute( $key, array_map( 'esc_attr', $attrs ) );
 	// following function has a duplication issue
 	//	return sprintf( '<%1$s %2$s>%3$s</%1$s>', esc_html( $html_tag ),
 	//		$widget->get_render_attribute_string( $key ), $key );
-
+	
 	$html_attrs = '';
 	foreach ( $attrs as $key => $value ) {
 		$html_attrs .= $key . "=" . $value . " ";
 	}
-
+	
 	return sprintf( '<%1$s %2$s>%3$s</%1$s>',
 		$html_tag,
 		$html_attrs,
@@ -167,15 +168,16 @@ function owce_get_text_with_tag( $widget, $html_tag, $text, $attrs = [] ) {
  * @return string
  */
 function owce_get_img_with_size( $settings, $img_size, $img_key, $widget = null, $lightbox = [] ) {
+	
 	$defaults = [
 		'show_lightbox'                => false,
 		'show_lightbox_title'          => true,
 		'show_lightbox_description'    => false,
 		'disable_lightbox_editor_mode' => true
 	];
-
+	
 	$options = wp_parse_args( $lightbox, $defaults );
-
+	
 	/**
 	 * @var string $show_lightbox
 	 * @var string $disable_lightbox_editor_mode
@@ -183,19 +185,20 @@ function owce_get_img_with_size( $settings, $img_size, $img_key, $widget = null,
 	 * @var string $show_lightbox_description
 	 */
 	extract( $options );
-
+	
 	if ( $widget && $show_lightbox ) {
+		
 		$link = [
 			'url' => $settings[ $img_key ]['url'],
 			'id'  => $settings[ $img_key ]['id']
 		];
-
+		
 		$img_id   = $link['id'];
 		$img_link = $link['url'];
-
+		
 		$widget->add_link_attributes( $img_link, $link );
 		$widget->add_lightbox_data_attributes( $img_link, $img_id, 'yes', $widget->get_id() );
-
+		
 		// enable/disable click on image to open lightbox in edit mode
 		if ( Plugin::$instance->editor->is_edit_mode() ) {
 			if ( $disable_lightbox_editor_mode ) {
@@ -204,24 +207,24 @@ function owce_get_img_with_size( $settings, $img_size, $img_key, $widget = null,
 				$widget->add_render_attribute( $img_link, [ 'class' => 'elementor-clickable' ] );
 			}
 		}
-
+		
 		// empty title value
 		if ( ! $show_lightbox_title ) {
 			$widget->add_render_attribute( $img_link, [ 'data-elementor-lightbox-title' => '' ], null, true );
 		}
-
+		
 		// empty description value
 		if ( ! $show_lightbox_description ) {
 			$widget->add_render_attribute( $img_link, [ 'data-elementor-lightbox-description' => '' ], null, true );
 		}
-
+		
 		$img_html = "<a " . $widget->get_render_attribute_string( $img_link ) . ">";
 		$img_html .= Group_Control_Image_Size::get_attachment_image_html( $settings, $img_size, $img_key );
 		$img_html .= "</a>";
-
+		
 		return $img_html;
 	}
-
+	
 	return Group_Control_Image_Size::get_attachment_image_html( $settings, $img_size, $img_key );
 }
 
@@ -236,8 +239,9 @@ function owce_get_img_with_size( $settings, $img_size, $img_key, $widget = null,
  * @param string $tab
  */
 function owce_common_controls_section( $widget, $field, $label, $selector, $options = [], $tab = '' ) {
+	
 	$field_prefix = owce_get_class_constant( $widget, 'FIELD_PREFIX' ) ? $widget::FIELD_PREFIX : '';
-
+	
 	$defaults = [
 		'hide'                    => true,
 		'hide_default'            => '',
@@ -265,9 +269,9 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 		'hover_animation_default' => '',
 		'condition'               => ''
 	];
-
+	
 	$options = wp_parse_args( $options, $defaults );
-
+	
 	/**
 	 * @var array  $condition
 	 * @var string $hide
@@ -296,9 +300,9 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 	 * @var string $hover_animation_default
 	 */
 	extract( $options );
-
+	
 	$tab_section = $tab == 'tab' ? Controls_Manager::TAB_CONTENT : Controls_Manager::TAB_STYLE;
-
+	
 	$widget->start_controls_section(
 		$field_prefix . 'style_' . $field,
 		[
@@ -307,7 +311,7 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 			'condition' => $condition
 		]
 	);
-
+	
 	if ( $hide ) {
 		$hide_options              = $options;
 		$hide_options['default']   = $options['hide_default'];
@@ -315,12 +319,12 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 		$_label                    = owce_key_value_exists( $options, 'hide_label', esc_html__( 'Hide', 'responsive-owl-carousel-elementor' ) );
 		owce_switcher_control( $widget, $field . '_hide', $_label, $hide_options );
 	}
-
+	
 	if ( $icon ) {
 		$_label = owce_key_value_exists( $options, 'icon_label', esc_html__( 'Icon', 'responsive-owl-carousel-elementor' ) );
 		owce_icons_control( $widget, $field, $_label, $options );
 	}
-
+	
 	if ( $tag ) {
 		$_label = owce_key_value_exists( $options, 'tag_label', esc_html__( 'HTML Tag', 'responsive-owl-carousel-elementor' ) );
 		$_tags  = [
@@ -336,12 +340,12 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 		];
 		owce_select_control( $widget, $field . '_tag', $_label, [ 'options' => $_tags, 'default' => $default_tag ] );
 	}
-
+	
 	if ( $color ) {
 		$_label = owce_key_value_exists( $options, 'color_label', esc_html__( 'Color', 'responsive-owl-carousel-elementor' ) );
 		owce_color_control( $widget, $field . '_color', $_label, $selector );
 	}
-
+	
 	if ( $background ) {
 		$_label = owce_key_value_exists( $options, 'background_label', esc_html__( 'Background', 'responsive-owl-carousel-elementor' ) );
 		owce_background_control( $widget, $field . '_background', $_label, [
@@ -349,7 +353,7 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 			'condition' => $condition,
 		] );
 	}
-
+	
 	if ( $hover_background ) {
 		$_label = owce_key_value_exists( $options, 'hover_background_label', esc_html__( 'Hover', 'responsive-owl-carousel-elementor' ) );
 		
@@ -369,12 +373,12 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 			'condition' => $condition,
 		] );
 	}
-
+	
 	if ( $hover_color ) {
 		$_label = owce_key_value_exists( $options, 'hover_color_label', esc_html__( 'Hover color', 'responsive-owl-carousel-elementor' ) );
 		owce_color_control( $widget, $field . '_hover_color', $_label, $selector, true );
 	}
-
+	
 	if ( $typography ) {
 		$_label = owce_key_value_exists( $options, 'typography_label', esc_html__( 'Typography', 'responsive-owl-carousel-elementor' ) );
 		$widget->add_group_control(
@@ -386,7 +390,7 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 			]
 		);
 	}
-
+	
 	if ( $gap ) {
 		$default_gap = null;
 		$_label      = owce_key_value_exists( $options, 'gap_label', esc_html__( 'Gap', 'responsive-owl-carousel-elementor' ) );
@@ -400,7 +404,7 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 			'mobile_default' => [ 'size' => 0 ],
 		] );
 	}
-
+	
 	if ( $font_size ) {
 		$_label = owce_key_value_exists( $options, 'font_size_label', esc_html__( 'Size', 'responsive-owl-carousel-elementor' ) );
 		owce_slider_control( $widget, $field . '_font_size', $_label, [
@@ -408,17 +412,17 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 			'selector' => $selector
 		] );
 	}
-
+	
 	if ( $align ) {
 		$_label = owce_key_value_exists( $options, 'align_label', esc_html__( 'Align', 'responsive-owl-carousel-elementor' ) );
 		owce_choose_control( $widget, $field . '_align', $_label, [ 'selector' => $selector ] );
 	}
-
+	
 	if ( $margin ) {
 		$_label = owce_key_value_exists( $options, 'margin_label', esc_html__( 'Margin', 'responsive-owl-carousel-elementor' ) );
 		owce_dimension_control( $widget, $field . '_margin', $_label, [ 'selector' => $selector ] );
 	}
-
+	
 	if ( $padding ) {
 		$_label = owce_key_value_exists( $options, 'padding_label', esc_html__( 'Padding', 'responsive-owl-carousel-elementor' ) );
 		owce_dimension_control( $widget, $field . '_padding', $_label, [
@@ -427,12 +431,12 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 			'default'  => $padding_default ?? []
 		] );
 	}
-
+	
 	if ( $size ) {
 		// width
 		$_label = owce_key_value_exists( $options, 'width_label', esc_html__( 'Width', 'responsive-owl-carousel-elementor' ) );
 		owce_slider_control( $widget, $field . '_width', $_label, [ 'selector' => $selector ] );
-
+		
 		// height
 		$_label = owce_key_value_exists( $options, 'height_label', esc_html__( 'Height', 'responsive-owl-carousel-elementor' ) );
 		owce_slider_control( $widget, $field . '_height', $_label, [
@@ -442,7 +446,11 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 			'description' => 'in px only'
 		] );
 	}
-
+	
+	//	if ( $image ) {
+	//
+	//	}
+	
 	if ( $border ) {
 		$_label = owce_key_value_exists( $options, 'border_label', esc_html__( 'Border', 'responsive-owl-carousel-elementor' ) );
 		$widget->add_group_control(
@@ -455,7 +463,7 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 			]
 		);
 	}
-
+	
 	if ( $box_shadow ) {
 		$_label = owce_key_value_exists( $options, 'box_shadow_label', esc_html__( 'Box Shadow', 'responsive-owl-carousel-elementor' ) );
 		$widget->add_group_control(
@@ -467,7 +475,7 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 			]
 		);
 	}
-
+	
 	if ( $border_radius ) {
 		$_label = owce_key_value_exists( $options, 'border_radius_label', esc_html__( 'Border Radius', 'responsive-owl-carousel-elementor' ) );
 		owce_dimension_control( $widget, $field . '_border_radius', $_label, [
@@ -476,7 +484,7 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 			'default'  => $border_radius_default ?? []
 		] );
 	}
-
+	
 	if ( $hover_animation ) {
 		$_label = owce_key_value_exists( $options, 'hover_animation_label', esc_html__( 'Hover Animation', 'responsive-owl-carousel-elementor' ) );
 		$widget->add_control(
@@ -488,7 +496,7 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 			]
 		);
 	}
-
+	
 	$widget->end_controls_section();
 }
 
@@ -501,6 +509,7 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
  * @param array $options
  */
 function owce_background_control( $widget, $field, $label, $options = [] ) {
+	
 	$defaults = [
 		'hover'              => false,
 		'background_type'    => [ 'classic' ],
@@ -508,9 +517,9 @@ function owce_background_control( $widget, $field, $label, $options = [] ) {
 		'selector'           => '',
 		'condition'          => '',
 	];
-
+	
 	$options = wp_parse_args( $options, $defaults );
-
+	
 	/**
 	 * @var string $default
 	 * @var string $description
@@ -522,15 +531,15 @@ function owce_background_control( $widget, $field, $label, $options = [] ) {
 	 * @var array  $condition
 	 */
 	extract( $options );
-
+	
 	$field_prefix = owce_get_class_constant( $widget, 'FIELD_PREFIX' ) ? $widget::FIELD_PREFIX : '';
-
+	
 	$selector = '{{WRAPPER}} ' . $selector;
-
+	
 	if ( $hover ) {
 		$selector = $selector . ':hover, ' . $selector . ':focus';
 	}
-
+	
 	$widget->add_group_control(
 		Group_Control_Background::get_type(),
 		[
@@ -567,9 +576,9 @@ function owce_text_control( $widget, $field, $label, $options = [] ) {
 		'selectors'   => '',
 		'condition'   => ''
 	];
-
+	
 	$options = wp_parse_args( $options, $defaults );
-
+	
 	/**
 	 * @var string $default
 	 * @var string $show_label
@@ -582,7 +591,7 @@ function owce_text_control( $widget, $field, $label, $options = [] ) {
 	 * @var string $input_type
 	 */
 	extract( $options );
-
+	
 	$args = [
 		'label'       => esc_html__( $label, 'responsive-owl-carousel-elementor' ),
 		'type'        => Controls_Manager::TEXT,
@@ -594,21 +603,21 @@ function owce_text_control( $widget, $field, $label, $options = [] ) {
 		'selectors'   => $selectors,
 		'condition'   => $condition
 	];
-
+	
 	if ( $type == 'text' ) {
 		$args['input_type'] = $input_type;
 	}
-
+	
 	if ( $type == 'textarea' ) {
 		$args['type'] = Controls_Manager::TEXTAREA;
 	}
-
+	
 	if ( $type == 'wysiwyg' ) {
 		$args['type'] = Controls_Manager::WYSIWYG;
 	}
-
+	
 	$field_prefix = owce_get_class_constant( $widget, 'FIELD_PREFIX' ) ? $widget::FIELD_PREFIX : '';
-
+	
 	$widget->add_control(
 		$field_prefix . $field,
 		$args
@@ -632,9 +641,9 @@ function owce_image_control( $widget, $field, $label, $options = [] ) {
 			'url' => Utils::get_placeholder_image_src()
 		],
 	];
-
+	
 	$options = wp_parse_args( $options, $defaults );
-
+	
 	/**
 	 * @var string $default
 	 * @var string $description
@@ -642,9 +651,9 @@ function owce_image_control( $widget, $field, $label, $options = [] ) {
 	 * @var array  $condition
 	 */
 	extract( $options );
-
+	
 	$field_prefix = owce_get_class_constant( $widget, 'FIELD_PREFIX' ) ? $widget::FIELD_PREFIX : '';
-
+	
 	$widget->add_control(
 		$field_prefix . $field,
 		[
@@ -684,9 +693,9 @@ function owce_dimension_control( $widget, $field, $label, $options = [] ) {
 		'selector'           => '',
 		'condition'          => '',
 	];
-
+	
 	$options = wp_parse_args( $options, $defaults );
-
+	
 	/**
 	 * @var string $default
 	 * @var string $description
@@ -699,7 +708,7 @@ function owce_dimension_control( $widget, $field, $label, $options = [] ) {
 	 * @var string $type
 	 */
 	extract( $options );
-
+	
 	$args = [
 		'label'              => esc_html__( $label, 'responsive-owl-carousel-elementor' ),
 		'description'        => esc_html__( $description, 'responsive-owl-carousel-elementor' ),
@@ -713,7 +722,7 @@ function owce_dimension_control( $widget, $field, $label, $options = [] ) {
 		'classes'            => $classes,
 		'condition'          => $condition,
 	];
-
+	
 	$field_prefix = owce_get_class_constant( $widget, 'FIELD_PREFIX' ) ? $widget::FIELD_PREFIX : '';
 	if ( $responsive ) {
 		$widget->add_responsive_control(
@@ -748,9 +757,9 @@ function owce_switcher_control( $widget, $field, $label, $options = [] ) {
 		'mobile_default' => 'yes',
 		'condition'      => ''
 	];
-
+	
 	$options = wp_parse_args( $options, $defaults );
-
+	
 	/**
 	 * @var string $default
 	 * @var string $description
@@ -763,7 +772,7 @@ function owce_switcher_control( $widget, $field, $label, $options = [] ) {
 	 * @var string $responsive
 	 */
 	extract( $options );
-
+	
 	$args = [
 		'label'        => esc_html__( $label, 'responsive-owl-carousel-elementor' ),
 		'description'  => esc_html__( $description, 'responsive-owl-carousel-elementor' ),
@@ -774,9 +783,9 @@ function owce_switcher_control( $widget, $field, $label, $options = [] ) {
 		'default'      => $default,
 		'condition'    => $condition
 	];
-
+	
 	$field_prefix = owce_get_class_constant( $widget, 'FIELD_PREFIX' ) ? $widget::FIELD_PREFIX : '';
-
+	
 	if ( $responsive ) {
 		$args['tablet_default'] = $tablet_default;
 		$args['mobile_default'] = $mobile_default;
@@ -813,9 +822,9 @@ function owce_number_control( $widget, $field, $label, $options = [] ) {
 		'mobile_default' => null,
 		'condition'      => ''
 	];
-
+	
 	$options = wp_parse_args( $options, $defaults );
-
+	
 	/**
 	 * @var string $default
 	 * @var string $description
@@ -828,7 +837,7 @@ function owce_number_control( $widget, $field, $label, $options = [] ) {
 	 * @var array  $condition
 	 */
 	extract( $options );
-
+	
 	$args = [
 		'label'       => esc_html__( $label, 'responsive-owl-carousel-elementor' ),
 		'description' => esc_html__( $description, 'responsive-owl-carousel-elementor' ),
@@ -839,7 +848,7 @@ function owce_number_control( $widget, $field, $label, $options = [] ) {
 		'default'     => $default,
 		'condition'   => $condition,
 	];
-
+	
 	if ( $responsive ) {
 		$args['tablet_default'] = $tablet_default;
 		$args['mobile_default'] = $mobile_default;
@@ -866,10 +875,11 @@ function owce_number_control( $widget, $field, $label, $options = [] ) {
  * @param bool $hover
  */
 function owce_color_control( $widget, $field, $label, $selector, $hover = false ) {
+	
 	if ( $hover ) {
 		$selector = $selector . ':hover';
 	}
-
+	
 	$widget->add_control(
 		$widget::FIELD_PREFIX . $field,
 		[
@@ -918,7 +928,7 @@ function owce_slider_control( $widget, $field, $label, $options = [] ) {
 	];
 	
 	$options = wp_parse_args( $options, $defaults );
-
+	
 	/**
 	 * @var string $default
 	 * @var string $description
@@ -932,7 +942,7 @@ function owce_slider_control( $widget, $field, $label, $options = [] ) {
 	 * @var string $responsive
 	 */
 	extract( $options );
-
+	
 	$args = [
 		'label'       => esc_html__( $label, 'responsive-owl-carousel-elementor' ),
 		'description' => esc_html__( $description, 'responsive-owl-carousel-elementor' ),
@@ -942,35 +952,35 @@ function owce_slider_control( $widget, $field, $label, $options = [] ) {
 		'default'     => $default,
 		'classes'     => $classes
 	];
-
+	
 	if ( $property == 'width' ) {
 		$args['selectors'] = [ '{{WRAPPER}} ' . $selector => 'width: {{SIZE}}{{UNIT}};' ];
 	}
-
+	
 	if ( $property == 'height' ) {
 		$args['selectors'] = [ '{{WRAPPER}} ' . $selector => 'height: {{SIZE}}{{UNIT}};' ];
 	}
-
+	
 	if ( $property == 'font-size' ) {
 		$args['selectors'] = [ '{{WRAPPER}} ' . $selector => 'font-size: {{SIZE}}{{UNIT}};' ];
 	}
-
+	
 	if ( $property == 'border-radius' ) {
 		$args['selectors'] = [ '{{WRAPPER}} ' . $selector => 'border-radius: {{SIZE}}{{UNIT}};' ];
 	}
-
+	
 	if ( $tablet_default ) {
 		$args['tablet_default'] = $options['tablet_default'];
 	}
-
+	
 	if ( $mobile_default ) {
 		$args['mobile_default'] = $options['mobile_default'];
 	}
-
+	
 	if ( $property == 'no-selector' ) {
 		unset( $args['selectors'] );
 	}
-
+	
 	$field_prefix = owce_get_class_constant( $widget, 'FIELD_PREFIX' ) ? $widget::FIELD_PREFIX : '';
 	if ( $responsive ) {
 		$widget->add_responsive_control(
@@ -1015,9 +1025,9 @@ function owce_choose_control( $widget, $field, $label, $options = [] ) {
 		'classes'     => '',
 		'selector'    => ''
 	];
-
+	
 	$options = wp_parse_args( $options, $defaults );
-
+	
 	/**
 	 * @var string $default
 	 * @var string $description
@@ -1025,7 +1035,7 @@ function owce_choose_control( $widget, $field, $label, $options = [] ) {
 	 * @var array  $selector
 	 */
 	extract( $options );
-
+	
 	$args = [
 		'label'       => esc_html__( $label, 'responsive-owl-carousel-elementor' ),
 		'description' => esc_html__( $description, 'responsive-owl-carousel-elementor' ),
@@ -1037,9 +1047,9 @@ function owce_choose_control( $widget, $field, $label, $options = [] ) {
 			'{{WRAPPER}} ' . $selector => 'text-align: {{VALUE}}'
 		]
 	];
-
+	
 	$field_prefix = owce_get_class_constant( $widget, 'FIELD_PREFIX' ) ? $widget::FIELD_PREFIX : '';
-
+	
 	$widget->add_control(
 		$field_prefix . $field,
 		$args
@@ -1063,9 +1073,9 @@ function owce_select_control( $widget, $field, $label, $_options = [] ) {
 		'selector'    => '',
 		'condition'   => ''
 	];
-
+	
 	$_options = wp_parse_args( $_options, $defaults );
-
+	
 	/**
 	 * @var string $default
 	 * @var string $description
@@ -1075,7 +1085,7 @@ function owce_select_control( $widget, $field, $label, $_options = [] ) {
 	 * @var array  $condition
 	 */
 	extract( $_options );
-
+	
 	$args = [
 		'label'       => esc_html__( $label, 'responsive-owl-carousel-elementor' ),
 		'description' => esc_html__( $description, 'responsive-owl-carousel-elementor' ),
@@ -1086,13 +1096,13 @@ function owce_select_control( $widget, $field, $label, $_options = [] ) {
 		'condition'   => $condition
 	
 	];
-
+	
 	if ( $selector == 'no-refresh' ) {
 		$args['selectors'] = [ '{{WRAPPER}} ' . $selector => '' ];
 	}
-
+	
 	$field_prefix = owce_get_class_constant( $widget, 'FIELD_PREFIX' ) ? $widget::FIELD_PREFIX : '';
-
+	
 	$widget->add_control(
 		$field_prefix . $field,
 		$args
@@ -1126,9 +1136,9 @@ function owce_url_control( $widget, $field, $label, $options = [] ) {
 		'selector'    => '',
 		'condition'   => ''
 	];
-
+	
 	$options = wp_parse_args( $options, $defaults );
-
+	
 	/**
 	 * @var string $default
 	 * @var string $placeholder
@@ -1140,7 +1150,7 @@ function owce_url_control( $widget, $field, $label, $options = [] ) {
 	 * @var array  $condition
 	 */
 	extract( $options );
-
+	
 	$args = [
 		'label'       => esc_html__( $label, 'responsive-owl-carousel-elementor' ),
 		'type'        => Controls_Manager::URL,
@@ -1156,9 +1166,9 @@ function owce_url_control( $widget, $field, $label, $options = [] ) {
 		],
 		'condition'   => $condition
 	];
-
+	
 	$field_prefix = owce_get_class_constant( $widget, 'FIELD_PREFIX' ) ? $widget::FIELD_PREFIX : '';
-
+	
 	$widget->add_control(
 		$field_prefix . $field,
 		$args
@@ -1179,17 +1189,17 @@ function owce_icons_control( $widget, $field, $label, $options = [] ) {
 		'classes'   => '',
 		'condition' => ''
 	];
-
+	
 	$options = wp_parse_args( $options, $defaults );
-
+	
 	/**
 	 * @var string $default
 	 * @var string $classes
 	 */
 	extract( $options );
-
+	
 	$field_prefix = owce_get_class_constant( $widget, 'FIELD_PREFIX' ) ? $widget::FIELD_PREFIX : '';
-
+	
 	$widget->add_control(
 		$field_prefix . $field,
 		[
@@ -1215,22 +1225,22 @@ function owce_social_icons_control( $widget, $fields, $options = [] ) {
 		'fa-instagram',
 		'fa-linkedin-in'
 	];
-
+	
 	$icons_options                       = $options;
 	$icons_options['default']['library'] = 'fa-brands';
-
+	
 	$index = 0;
-
+	
 	$existing_classes = $options['classes'] . ' ';
-
+	
 	foreach ( $fields as $key => $label ) {
 		$icons_options['default']['value'] = 'fab ' . $default_icons[ $index ];
 		owce_icons_control( $widget, $key, $label, $icons_options );
-
+		
 		$options['classes'] = $existing_classes . $key . '_link_url';
 		owce_url_control( $widget, $key . '_link', $label . ' Link', $options );
-
-		$index++;
+		
+		$index ++;
 	}
 }
 
@@ -1247,7 +1257,7 @@ function owce_get_rendered_icons( $key, $length = 1 ) {
 	for ( $i = 1; $i <= $length; $i ++ ) {
 		Icons_Manager::render_icon( $key, [ 'aria-hidden' => 'true' ] );
 	}
-
+	
 	return ob_get_clean();
 }
 
@@ -1278,6 +1288,6 @@ function owce_get_class_constant( $class, $name ) {
 	} else if ( is_object( $class ) ) {
 		return defined( get_class( $class ) . "::$name" );
 	}
-
+	
 	return false;
 }
