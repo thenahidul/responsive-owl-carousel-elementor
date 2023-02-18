@@ -15,7 +15,7 @@ use Elementor\Control_Animation;
  * @since 2.5.0
  */
 class Custom_Exit_Animation extends Control_Animation {
-	
+
 	/**
 	 * Get control type.
 	 *
@@ -30,7 +30,7 @@ class Custom_Exit_Animation extends Control_Animation {
 		// same name as elementor default exit_animation used to get select2 styles
 		return 'exit_animation';
 	}
-	
+
 	/**
 	 * Get animations.
 	 *
@@ -43,7 +43,7 @@ class Custom_Exit_Animation extends Control_Animation {
 	 * @access public
 	 *
 	 */
-	
+
 	protected function get_default_settings() {
 		$animations      = self::get_animations();
 		$flat_animations = array_merge( array_keys( $animations ), array_values( $animations ) );
@@ -52,7 +52,7 @@ class Custom_Exit_Animation extends Control_Animation {
 			'animations' => $flat_animations
 		];
 	}
-	
+
 	/**
 	 * Get animations list.
 	 *

@@ -15,7 +15,7 @@ use Elementor\Control_Animation;
  * @since 2.5.0
  */
 class Custom_Entry_Animation extends Control_Animation {
-	
+
 	/**
 	 * Get control type.
 	 *
@@ -30,7 +30,7 @@ class Custom_Entry_Animation extends Control_Animation {
 		// same name as elementor default 'animation' used to get select2 styles
 		return 'animation';
 	}
-	
+
 	/**
 	 * Get animations.
 	 *
@@ -43,7 +43,7 @@ class Custom_Entry_Animation extends Control_Animation {
 	 * @access public
 	 *
 	 */
-	
+
 	protected function get_default_settings() {
 		$animations      = self::get_animations();
 		$flat_animations = array_merge( array_keys( $animations ), array_values( $animations ) );
@@ -52,7 +52,7 @@ class Custom_Entry_Animation extends Control_Animation {
 			'animations' => $flat_animations
 		];
 	}
-	
+
 	/**
 	 * Get animations list.
 	 *
@@ -119,9 +119,9 @@ class Custom_Entry_Animation extends Control_Animation {
 				'rollIn' => 'Roll In',
 			],
 		];
-		
+
 		$additional_animations = [];
-		
+
 		/**
 		 * Entrance animations.
 		 *
@@ -136,15 +136,15 @@ class Custom_Entry_Animation extends Control_Animation {
 		 *
 		 */
 		$additional_animations = apply_filters( 'elementor/controls/animations/additional_animations', $additional_animations );
-		
+
 		return array_merge( $animations, $additional_animations );
 	}
-	
+
 	public static function get_assets( $setting ) {
 		if ( ! $setting || 'none' === $setting ) {
 			return [];
 		}
-		
+
 		return [
 			'styles' => [ 'e-animations' ],
 		];
