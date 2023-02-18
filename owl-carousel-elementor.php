@@ -4,7 +4,7 @@
  * Description: A highly customizable & responsive carousel plugin for Elementor page builder based on Owl Carousel
  * Plugin URI: https://github.com/thenahidul/responsive-owl-carousel-elementor
  *
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: TheNahidul
  * Author URI: https://www.linkedin.com/in/thenahidul
  *
@@ -15,11 +15,11 @@
  * Domain Path: /languages
  *
  * Requires at least: 5.0
- * Tested up to: 5.9.3
+ * Tested up to: 6.1.1
  * Requires PHP version: 7.3
  *
- * Elementor tested up to: 3.6.5
- * Elementor Pro tested up to: 3.6.5
+ * Elementor tested up to: 3.11.1
+ * Elementor Pro tested up to: 3.11.1
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -29,7 +29,7 @@ use Owl_Carousel_Elementor\Plugin;
 /**
  * Define useful constants
  */
-define( "OWCE_VERSION", '1.0.0' );
+define( "OWCE_VERSION", '1.0.1' );
 define( "OWCE_PLUGIN_FILE", __FILE__ );
 define( "OWCE_PLUGIN_PATH", __DIR__ );
 define( "OWCE_PLUGIN_URL", plugins_url( '', OWCE_PLUGIN_FILE ) );

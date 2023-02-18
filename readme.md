@@ -48,5 +48,9 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 ### Stable Builds
 
+*   2023-02-18 -- **1.0.1**
+    * _Patch release_
+
+
 *   2022-05-18 -- **1.0.0**
     *  _Initial release_

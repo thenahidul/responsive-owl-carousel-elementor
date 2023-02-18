@@ -33,8 +33,8 @@
 		var val = $this.val();
 
 		if ($this.is("select")) {
-			if (dataSetting == "carousel_layout") {
-				if (event.type == "change") {
+			if (dataSetting === "carousel_layout") {
+				if (event.type === "change") {
 					owce_repeater_field_hide($panelEl);
 				}
 				owce_modify_setting($panelEl, val);
@@ -65,13 +65,7 @@
 		});
 	} // owce_repeater_field_hide
 
-	function owce_update_carousel_item(
-		$this,
-		$element,
-		currentSetting,
-		currentVal,
-		event
-	) {
+	function owce_update_carousel_item( $this, $element, currentSetting, currentVal, event ) {
 		// every repeater item has unique id
 		var currentRepeaterItem = $this
 			.closest(".elementor-repeater-row-controls")
@@ -94,18 +88,18 @@
 		}
 	} // owce_update_carousel_item
 
-	function owce_modify_setting($element, currentVal) {
+	function owce_modify_setting( $element, currentVal ) {
 		var imgSize = owce_find_by_data($element, "carousel_thumbnail_size");
 
 		var trigger = true;
 
-		if (currentVal == "testimonial") {
+		if (currentVal === "testimonial") {
 			imgSize.val("owl_elementor_testimonial");
-		} else if (currentVal == "team") {
+		} else if ( currentVal === "team" ) {
 			imgSize.val("owl_elementor_team");
 		} else {
 			trigger = false;
-			if (imgSize.val() != "owl_elementor_thumbnail") {
+			if ( imgSize.val() !== "owl_elementor_thumbnail" ) {
 				imgSize.val("owl_elementor_thumbnail");
 				trigger = true;
 			}
