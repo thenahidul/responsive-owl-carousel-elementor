@@ -1,11 +1,14 @@
 <?php
 /**
- * Plugin Name: Responsive Owl Carousel for Elementor
+ * Plugin Name: Responsive Owl Carousel for Elementor (customized)
  * Description: A highly customizable & responsive carousel plugin for Elementor page builder based on Owl Carousel
- * Plugin URI: https://github.com/thenahidul/responsive-owl-carousel-elementor
+ * Plugin URI: https://github.com/eleazarcelis/responsive-owl-carousel-elementor
  *
- * Version: 1.0.1
- * Author: TheNahidul
+ * Version: 1.0.2
+ * Author: Ele
+ * Author URI: https://www.linkedin.com/in/eleazarcelis/
+ * 
+ * Original Author: TheNahidul
  * Author URI: https://www.linkedin.com/in/thenahidul
  *
  * License: GPLv2 or later

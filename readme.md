@@ -8,6 +8,7 @@ This is a Carousel addon plugin, thanks to [Owl Carousel](https://owlcarousel2.g
 ## Plugin Features
 
 * Tons of Custom Settings
+* HTML Slide Carousel
 * Image Carousel
 * Testimonial Carousel with Several Versions
 * Team Carousel with Several Versions

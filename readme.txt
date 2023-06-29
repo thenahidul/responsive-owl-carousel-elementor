@@ -18,6 +18,7 @@ This is a Carousel addon plugin,  thanks to <a href="https://owlcarousel2.github
 = Plugin Features =
 
 * Tons of Custom Settings
+* HTML Slide Carousel
 * Image Carousel
 * Testimonial Carousel with Several Versions
 * Team Carousel with Several Versions

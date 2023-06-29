@@ -116,6 +116,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 			'slider',
 			'slideshow',
 			'team',
+			'basic'
 		);
 	}
 
@@ -189,6 +190,15 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 			/*'selector' => 'no-refresh'*/
 		] );
 
+		owce_select_control( $this, 'layout_basic', 'Style', [
+			'options' => get_carousel_layout_styles( 'basic' ),
+			'default' => 'one',
+			/*'selector' => 'no-refresh'*/
+			'condition' => [
+				$field_prefix . 'layout' => [ 'basic' ]
+			]
+		] );
+
 		owce_select_control( $this, 'layout_testimonial', 'Style', [
 			'options'   => get_carousel_layout_styles( 'testimonial' ),
 			'default'   => 'one',
@@ -225,7 +235,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 
 		owce_text_control( $repeater, 'item_subtitle', 'Sub title', [
 			'selectors' => [ '' ],
-			'classes'   => 'js_repeater_single js_hide_on_layout_basic js_hide_on_layout_image',
+			'classes'   => 'js_repeater_single js_hide_on_layout_basic js_hide_on_layout_image'
 		] );
 
 		owce_text_control( $repeater, 'item_content', 'Content', [
@@ -236,7 +246,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 
 		owce_image_control( $repeater, 'item_image', 'Upload photo', [
 			'selectors' => [ '' ],
-			'classes'   => 'js_repeater_single'
+			'classes'   => 'js_repeater_single js_hide_on_layout_basic_two'
 		] );
 
 		owce_slider_control( $repeater, 'item_rating', 'Rating', [

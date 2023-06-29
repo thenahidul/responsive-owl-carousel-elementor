@@ -47,7 +47,8 @@ function get_carousel_layouts() {
 function get_carousel_layout_styles( $layout = 'basic' ) {
 	$styles = [
 		'basic'       => [
-			'one' => __( 'One', 'responsive-owl-carousel-elementor' )
+			'one' => __( 'One', 'responsive-owl-carousel-elementor' ),
+			'two' => __( 'Two', 'responsive-owl-carousel-elementor' )
 		],
 		'testimonial' => [
 			'one'   => __( 'One', 'responsive-owl-carousel-elementor' ),

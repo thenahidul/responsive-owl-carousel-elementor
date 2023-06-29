@@ -54,10 +54,18 @@
 			"carousel_layout"
 		).val();
 
+		var currentStyle = owce_find_by_data(
+			$element,
+			"carousel_layout_" + currentLayout
+		).val();
+
 		$repeater.find(".js_repeater_single").each(function () {
 			var $this = $(this);
 			if ($this.hasClass("js_hide_on_layout_" + currentLayout)) {
 				// elementor removes the class 'elementor-hidden-control' when start typing on the other/visible field
+				$this.css("display", "none");
+			}
+			else if($this.hasClass("js_hide_on_layout_" + currentLayout + "_" + currentStyle)) {
 				$this.css("display", "none");
 			} else {
 				$this.css("display", "block");
