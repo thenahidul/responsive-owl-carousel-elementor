@@ -23,6 +23,7 @@ This is a Carousel addon plugin,  thanks to <a href="https://owlcarousel2.github
 * Testimonial Carousel with Several Versions
 * Team Carousel with Several Versions
 * Image Slider with the Caption
+* Image Slider with overlay content and the Caption
 * Draggable Carousel Item Sorting
 * Fully Responsive
 * Individual styling for each Item Elements

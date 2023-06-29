@@ -36,7 +36,8 @@
 	border-radius: 5px;
 }
 
-.owce-carousel .owl-content {
+.owce-carousel .owl-content, 
+.owce-carousel .owl-content-thumbnail {
 	font-style: italic;
 	line-height: 1.5;
 	margin: 20px 0 15px;
@@ -142,6 +143,19 @@
 .owce-carousel-basic .owl-nav .owl-prev,
 .owce-carousel-basic .owl-nav .owl-next {
 	top: 35%;
+}
+
+.owce-carousel-basic-three .owl-thumb{
+	position:relative;
+}
+
+.owce-carousel-basic-three .owl-content-thumbnail {
+	position: absolute;
+	width: 100%;
+	top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 /* LAYOUT - IMAGE  */
