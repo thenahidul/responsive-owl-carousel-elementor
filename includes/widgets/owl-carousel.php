@@ -116,6 +116,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 			'slider',
 			'slideshow',
 			'team',
+			'basic'
 		);
 	}
 
@@ -189,6 +190,15 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 			/*'selector' => 'no-refresh'*/
 		] );
 
+		owce_select_control( $this, 'layout_basic', 'Style', [
+			'options' => get_carousel_layout_styles( 'basic' ),
+			'default' => 'one',
+			/*'selector' => 'no-refresh'*/
+			'condition' => [
+				$field_prefix . 'layout' => [ 'basic' ]
+			]
+		] );
+
 		owce_select_control( $this, 'layout_testimonial', 'Style', [
 			'options'   => get_carousel_layout_styles( 'testimonial' ),
 			'default'   => 'one',
@@ -225,18 +235,24 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 
 		owce_text_control( $repeater, 'item_subtitle', 'Sub title', [
 			'selectors' => [ '' ],
-			'classes'   => 'js_repeater_single js_hide_on_layout_basic js_hide_on_layout_image',
+			'classes'   => 'js_repeater_single js_hide_on_layout_basic js_hide_on_layout_image'
+		] );
+
+		owce_text_control( $repeater, 'thumbnail_content', 'Thumbnail Overlay Content', [
+			'type'      => 'textarea',
+			'selectors' => [ '' ],
+			'classes'   => 'js_repeater_single js_hide_on_layout_image js_hide_on_layout_team js_hide_on_layout_basic_one js_hide_on_layout_basic_two'
+		] );
+
+		owce_image_control( $repeater, 'item_image', 'Upload photo', [
+			'selectors' => [ '' ],
+			'classes'   => 'js_repeater_single js_hide_on_layout_basic_two'
 		] );
 
 		owce_text_control( $repeater, 'item_content', 'Content', [
 			'type'      => 'textarea',
 			'selectors' => [ '' ],
 			'classes'   => 'js_repeater_single js_hide_on_layout_image js_hide_on_layout_team'
-		] );
-
-		owce_image_control( $repeater, 'item_image', 'Upload photo', [
-			'selectors' => [ '' ],
-			'classes'   => 'js_repeater_single'
 		] );
 
 		owce_slider_control( $repeater, 'item_rating', 'Rating', [
@@ -490,15 +506,14 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 
 		owce_common_controls_section(
 			$this,
-			'content',
-			'Content',
-			'.owl-content',
+			'thumbnail-content',
+			'Thumbnail Overlay Content',
+			'.owl-content-thumbnail',
 			array(
-				'default_tag'      => 'p',
+				'default_tag'      => 'div',
 				'condition'        => [
 					$field_prefix . 'layout' => [
-						'basic',
-						'testimonial'
+						'basic'
 					]
 				],
 				'show_hide_button' => [
@@ -524,6 +539,28 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 				'border_radius'    => true,
 				'typography'       => false,
 				'size'             => true,
+				'show_hide_button' => [
+					$field_prefix . 'layout' => [
+						'team',
+						'testimonial'
+					]
+				],
+			)
+		);
+
+		owce_common_controls_section(
+			$this,
+			'content',
+			'Content',
+			'.owl-content',
+			array(
+				'default_tag'      => 'p',
+				'condition'        => [
+					$field_prefix . 'layout' => [
+						'basic',
+						'testimonial'
+					]
+				],
 				'show_hide_button' => [
 					$field_prefix . 'layout' => [
 						'team',
