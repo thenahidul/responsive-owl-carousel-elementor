@@ -1,12 +1,12 @@
 === Responsive Owl Carousel for Elementor ===
 Contributors: thenahidul
 Tags: owl carousel, carousel, carousel slider, image carousel, testimonial slider, team slider, testimonial carousel, owl carousel elementor, elementor carousel,
-Requires at least: 5.0
-Tested up to: 6.1.1
-Requires PHP: 7.3
-Elementor tested up to: 3.11.1
-Elementor Pro tested up to: 3.11.1
-Stable tag: 1.0.1
+Requires at least: 6.0
+Tested up to: 6.4.1
+Requires PHP: 7.4
+Elementor tested up to: 3.17.3
+Elementor Pro tested up to: 3.17.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,3 +74,8 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 = 1.0.1 =
 * Fix bugs
 * Add support to WordPress 6.1.1 and Elementor 3.11.1
+
+= 1.1.0 =
+*  Add support to WordPress 6.4.x and Elementor 3.17.x
+* Added new rtl mode to the carousel
+* Code enhancements
