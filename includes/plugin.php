@@ -241,11 +241,5 @@ final class Plugin {
 	 *
 	 * @param Controls_Manager $controls_manager Elementor controls manager.
 	 */
-	public function register_controls( $controls_manager ) {
-		require_once OWCE_PLUGIN_PATH . '/includes/controls/custom-entry-animation.php';
-		require_once OWCE_PLUGIN_PATH . '/includes/controls/custom-exit-animation.php';
-
-		$controls_manager->register( new Custom_Entry_Animation() );
-		$controls_manager->register( new Custom_Exit_Animation() );
-	}
+	public function register_controls( $controls_manager ) {}
 }

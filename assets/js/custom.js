@@ -16,6 +16,7 @@
 
 		// $carousel.each(function () { // each not necessary
 		$carousel.owlCarousel({
+
 			margin: options.margin, // dont' delete
 			lazyLoad: options.lazyLoad,
 			autoHeight: options.auto_height,

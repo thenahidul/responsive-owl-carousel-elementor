@@ -321,8 +321,9 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 			[
 				'label'       => esc_html__( 'Entry Animation', 'responsive-owl-carousel-elementor' ),
 				'description' => esc_html__( 'Animate works only with 1 item.', 'responsive-owl-carousel-elementor' ),
-				'type'        => 'animation',
+				'type'        => Controls_Manager::ANIMATION,
 				'label_block' => true,
+				'frontend_available' => true,
 				'condition'   => [ $field_prefix . 'items_count' => 1 ],
 			]
 		);
@@ -332,8 +333,9 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 			[
 				'label'       => esc_html__( 'Exit Animation', 'responsive-owl-carousel-elementor' ),
 				'description' => esc_html__( 'Animate works only with 1 item.', 'responsive-owl-carousel-elementor' ),
-				'type'        => 'exit_animation',
+				'type'        => Controls_Manager::EXIT_ANIMATION,
 				'label_block' => true,
+				'frontend_available' => true,
 				'condition'   => [ $field_prefix . 'items_count' => 1 ],
 			]
 		);
