@@ -315,6 +315,21 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 			'step'           => 1,
 			'description'    => esc_html__( 'The number of items visible on the screen at a time', 'responsive-owl-carousel-elementor' ),
 		] );
+
+		owce_number_control( $this, 'items_slideby', 'Slide by', [
+			'responsive'     => true,
+			'default'        => 1,
+			'tablet_default' => 1,
+			'mobile_default' => 1,
+			'min'            => 1,
+			'max'            => 12,
+			'step'           => 1,
+			'description'    => esc_html__( 'The number of slides to be moved at a time', 'responsive-owl-carousel-elementor' ),
+		] );
+
+		owce_switcher_control( $this, 'rtl', 'Enable RTL', [
+			'default' => false,
+		] );
 		
 		$this->add_control(
 			$field_prefix . 'animate_in',
@@ -657,13 +672,20 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 		}
 
 		$settings_js = [
-			'field_prefix'       => $field_prefix,
-			'layout'             => $layout,
+			'field_prefix' => $field_prefix,
+
+			'layout' => $layout,
+			'rtl'    => $this->get_owl_settings( 'rtl' ),
+
 			'items_count'        => $this->get_owl_settings( 'items_count' ),
 			'items_count_tablet' => $this->get_owl_settings( 'items_count_tablet' ),
 			'items_count_mobile' => $this->get_owl_settings( 'items_count_mobile' ),
 
-			'margin'        => $this->get_owl_settings( 'items_single_gap' )['size'],
+			'items_slideby'        => $this->get_owl_settings( 'items_slideby' ),
+			'items_slideby_tablet' => $this->get_owl_settings( 'items_slideby_tablet' ),
+			'items_slideby_mobile' => $this->get_owl_settings( 'items_slideby_mobile' ),
+
+			'margin'        => ! empty( $this->get_owl_settings( 'items_single_gap' )['size'] ) ? $this->get_owl_settings( 'items_single_gap' )['size'] : 10,
 			'margin_tablet' => ! empty( $this->get_owl_settings( 'items_single_gap_tablet' ) ) ? $this->get_owl_settings( 'items_single_gap_tablet' )['size'] : 0,
 			'margin_mobile' => ! empty( $this->get_owl_settings( 'items_single_gap_mobile' ) ) ? $this->get_owl_settings( 'items_single_gap_mobile' )['size'] : 0,
 
