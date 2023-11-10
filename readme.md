@@ -48,6 +48,11 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 #### Stable Builds
 
+*   2023-11-10 -- **1.1.0**
+    *  _Update Compatiblity to WordPress 6.4x_
+    * Added new rtl mode to the carousel
+    * Code enhancements
+
 *   2023-02-18 -- **1.0.1**
     *  _Patch release_
 

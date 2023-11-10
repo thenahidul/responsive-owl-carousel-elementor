@@ -89,7 +89,6 @@ function get_social_icons() {
  * @return false|string|void
  */
 function owce_get_social_icons( $widget, $settings, $attrs = [ 'class' => '' ] ) {
-
 	$social_icons = get_social_icons();
 	if ( count( $social_icons ) < 1 ) {
 		return;
