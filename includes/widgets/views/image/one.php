@@ -10,13 +10,9 @@ if ( ! empty( $settings ) ) :
 			$link_start = '';
 			$link_end   = '';
 			if ( ! empty( $item['item_url']['url'] ) ) {
-				$this->add_link_attributes( 'item_url' . $item_count, $item['item_url'] );
-				$link_attrs = $this->get_render_attribute_string( 'item_url' . $item_count );
-
-				if ( ! empty( $link_attrs ) ) {
-					$link_start = '<a class="owl-link" ' . wp_kses_post( $link_attrs ) . '>';
-					$link_end   = '</a>';
-				}
+				$link_html  = owce_get_item_link( $this, $item, $item_count );
+				$link_start = $link_html[0] ?? '';
+				$link_end   = $link_html[1] ?? '';
 			}
 			$item_count++;
 			?>

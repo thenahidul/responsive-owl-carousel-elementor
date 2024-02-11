@@ -1283,3 +1283,31 @@ function owce_get_class_constant( $class, $name ) {
 
 	return false;
 }
+
+/**
+ * Generate item link HTML
+ *
+ * @param $widget
+ * @param $item
+ * @param $index
+ * @param $class
+ * @return string[]
+ */
+function owce_get_item_link( $widget, $item, $index = null, $class = '' ) {
+	$link_start = '';
+	$link_end   = '';
+	if ( ! empty( $item['item_url']['url'] ) ) {
+		$widget->add_link_attributes( 'item_url' . $index, $item['item_url'] );
+		$link_attrs = $widget->get_render_attribute_string( 'item_url' . $index );
+
+		if ( ! empty( $link_attrs ) ) {
+			$link_start = '<a class="owl-link ' . esc_attr( $class ) . '" ' . wp_kses_post( $link_attrs ) . '>';
+			$link_end   = '</a>';
+		}
+	}
+
+	return array(
+		$link_start,
+		$link_end,
+	);
+}
