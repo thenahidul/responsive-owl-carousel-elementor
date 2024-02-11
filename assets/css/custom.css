@@ -44,35 +44,33 @@
 
 .owce-carousel .owl-title {
 	margin: 0 0 5px;
-	font-size: 19.2px;
 	font-size: 1.2rem;
 }
 
 .owce-carousel h1.owl-title {
-	font-size: 23.2px;
 	font-size: 1.45rem;
 }
 
 .owce-carousel h2.owl-title {
-	font-size: 21.6px;
 	font-size: 1.35rem;
 }
 
 .owce-carousel .owl-subtitle {
 	margin: 0;
-	font-size: 14px;
 	font-size: 0.875rem;
 	font-weight: 500;
 }
 
 .owce-carousel h4.owl-subtitle {
-	font-size: 18.4px;
 	font-size: 1.15rem;
 }
 
 .owce-carousel h6.owl-subtitle {
-	font-size: 16px;
 	font-size: 1rem;
+}
+
+.owce-carousel .owl-link {
+	text-decoration: none;
 }
 
 .owce-carousel .owl-rating-icon {
@@ -291,12 +289,14 @@
 	color: #7a7a7a;
 	margin: 5px;
 	padding: 5px;
-	/*width: 35px;*/
-	/*height: 35px;*/
-	/*line-height: 35px;*/
 	text-align: center;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
+}
+
+.owl-social-icon svg {
+	width: 30px;
+	height: 30px;
 }
 
 .owl-social-icon i:hover {
@@ -322,33 +322,38 @@
 	-webkit-justify-content: center;
 	-ms-flex-pack: center;
 	justify-content: center;
-	height: 100%;
-	width: 100%;
 	z-index: 1;
 }
 
-.owce-carousel-team-two .owl-team-footer,
-.owce-carousel-team-two .owl-team-footer:after {
+.owce-carousel-team-two .owl-overlay:after,
+.owce-carousel-team-two .owl-team-footer {
 	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
 	visibility: hidden;
 	opacity: 0;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 	-webkit-transition: all 0.19s;
 	transition: all 0.19s;
 }
 
-.owce-carousel-team-two .owl-team-footer:after {
-	content: "";
+.owce-carousel-team-two .owl-team-footer {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.owce-carousel-team-two .owl-overlay:after {
+	content: '';
 	background: rgba(0, 0, 0, 0.8);
-	width: 20%;
-	height: 20%;
-	top: 40%;
-	left: 40%;
-	z-index: -1;
+	inset: 45%;
+}
+
+.owce-carousel-team-two .item:hover .owl-team-footer,
+.owce-carousel-team-two .item:hover .owl-overlay:after {
+	visibility: visible;
+	opacity: 1;
+}
+
+.owce-carousel-team-two .item:hover .owl-overlay:after {
+	inset: 0;
 }
 
 .owce-carousel-team-two .owl-thumb {
@@ -360,16 +365,6 @@
 	padding-bottom: 0;
 }
 
-.owce-carousel-team-two .item:hover .owl-team-footer,
-.owce-carousel-team-two .item:hover .owl-team-footer:after {
-	height: 100%;
-	width: 100%;
-	top: 0;
-	left: 0;
-	visibility: visible;
-	opacity: 1;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-}
 
 /*Responsive*/
 @media (max-width: 1023px) and (min-width: 768px) {

@@ -94,6 +94,8 @@ function owce_get_social_icons( $widget, $settings, $attrs = [ 'class' => '' ] )
 		return;
 	}
 
+	$output = '';
+
 	ob_start();
 	foreach ( $social_icons as $icon_key => $label ) {
 
@@ -120,7 +122,8 @@ function owce_get_social_icons( $widget, $settings, $attrs = [ 'class' => '' ] )
 			$widget,
 			'a',
 			owce_get_rendered_icons( $settings[ $icon_key ] ),
-			$link_attrs );
+			$link_attrs
+		);
 	}
 
 	return ob_get_clean();
@@ -353,7 +356,7 @@ function owce_common_controls_section( $widget, $field, $label, $selector, $opti
 		$_label = owce_key_value_exists( $options, 'hover_background_label', esc_html__( 'Hover', 'responsive-owl-carousel-elementor' ) );
 		
 		// label/description doesn't work for background control.
-		// That's creating an heading control to show a note
+		// That's why creating a heading control to show a note
 		$widget->add_control(
 			'_hover_background_note',
 			[
@@ -875,7 +878,7 @@ function owce_color_control( $widget, $field, $label, $selector, $hover = false 
 			'label'     => esc_html__( $label, 'responsive-owl-carousel-elementor' ),
 			'type'      => Controls_Manager::COLOR,
 			'selectors' => [
-				'{{WRAPPER}} ' . $selector => 'color: {{VALUE}}'
+				'{{WRAPPER}} ' . $selector => strpos( $selector, 'svg' ) ? 'fill: {{VALUE}}' : 'color: {{VALUE}}',
 			]
 		]
 	);
@@ -1243,7 +1246,7 @@ function owce_social_icons_control( $widget, $fields, $options = [] ) {
  */
 function owce_get_rendered_icons( $key, $length = 1 ) {
 	ob_start();
-	for ( $i = 1; $i <= $length; $i ++ ) {
+	for ( $i = 1; $i <= $length; $i++ ) {
 		Icons_Manager::render_icon( $key, [ 'aria-hidden' => 'true' ] );
 	}
 

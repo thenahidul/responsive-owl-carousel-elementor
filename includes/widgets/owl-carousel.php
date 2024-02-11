@@ -253,6 +253,21 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 			'classes'    => 'js_repeater_single js_hide_on_layout_basic js_hide_on_layout_image'
 		] );
 
+		$repeater->add_control(
+			'item_url',
+			[
+				'label'       => esc_html__( 'Item Link', 'responsive-owl-carousel-elementor' ),
+				'description' => esc_html__( 'Add URl for the whole item.', 'responsive-owl-carousel-elementor' ),
+				'type'        => Controls_Manager::URL,
+				'options'     => [ 'url', 'is_external', 'nofollow' ],
+				'default'     => [
+					'url'         => '',
+					'is_external' => false,
+					'nofollow'    => false,
+				],
+			]
+		);
+
 		owce_social_icons_control( $repeater, get_social_icons(), [
 			'classes' => 'js_repeater_single js_hide_on_layout_basic js_hide_on_layout_image js_hide_on_layout_testimonial'
 		] );
@@ -260,7 +275,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 		$this->add_control(
 			'items_list',
 			[
-				'label'       => esc_html__( 'Caoursel items', 'responsive-owl-carousel-elementor' ),
+				'label'       => esc_html__( 'Carousel items', 'responsive-owl-carousel-elementor' ),
 				'type'        => Controls_Manager::REPEATER,
 				'classes'     => 'js_items_list_repeater',
 				'fields'      => $repeater->get_controls(),
@@ -584,7 +599,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 			$this,
 			'social_icon',
 			'Social icon',
-			'.owl-social-icon i',
+			'.owl-social-icon i, .owl-social-icon svg',
 			array(
 				'font_size'               => true,
 				'hover_color'             => true,
@@ -729,6 +744,7 @@ class Owl_Carousel extends \Elementor\Widget_Base {
 		$css_classes = $show_nav != 'yes' ? 'owce-carousel-no-nav' : '';
 		$css_classes .= $show_nav_tablet != 'yes' ? ' owce-carousel-no-nav-tablet' : '';
 		$css_classes .= $show_nav_mobile != 'yes' ? ' owce-carousel-no-nav-mobile' : '';
+		$css_classes .= ' owce-carousel-' . $this->get_id();
 
 		echo "<div class='js-owce-carousel-container owce-carousel-container " . esc_attr( $css_classes ) . "'>";
 		echo "<div " . $this->get_render_attribute_string( 'carousel-options' ) . ">";
