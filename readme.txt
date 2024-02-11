@@ -2,11 +2,11 @@
 Contributors: thenahidul
 Tags: owl carousel, carousel, carousel slider, image carousel, testimonial slider, team slider, testimonial carousel, owl carousel elementor, elementor carousel,
 Requires at least: 6.0
-Tested up to: 6.4.1
+Tested up to: 6.4.3
 Requires PHP: 7.4
-Elementor tested up to: 3.17.3
-Elementor Pro tested up to: 3.17.1
-Stable tag: 1.1.0
+Elementor tested up to: 3.19.2
+Elementor Pro tested up to: 3.19.2
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 

@@ -48,6 +48,10 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 #### Stable Builds
 
+*   2024-02-12 -- **1.2.0**
+    * Added option to add link to the whole item
+    * Fix bugs
+
 *   2023-11-10 -- **1.1.0**
     *  _Update Compatiblity to WordPress 6.4x_
     * Added new rtl mode to the carousel

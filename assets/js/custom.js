@@ -94,7 +94,7 @@
 			}
 		});
 
-		if ( $( '.js-elementor-not-clickable' ).length) {
+		if ( $( '.js-elementor-not-clickable' ).length ) {
 			$( '.js-elementor-not-clickable' ).parent( '.owl-thumb' ).addClass( 'js-elementor-not-clickable' );
 		}
 	};
