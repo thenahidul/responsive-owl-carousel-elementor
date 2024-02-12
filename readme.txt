@@ -79,3 +79,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 *  Add support to WordPress 6.4.x and Elementor 3.17.x
 * Added new rtl mode to the carousel
 * Code enhancements
+
+= 1.2.0 =
+* dded option to add link to the whole item
+* Fix bugs
